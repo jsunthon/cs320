@@ -156,7 +156,7 @@ public class CoffeeShopLocator extends HttpServlet {
 				}
 			}
 		}
-
+		
 		if (type.equals("city") && query != "") {
 			session.setAttribute("miles", null);
 			for (Location location : locations) {
