@@ -49,7 +49,7 @@ public class NewsletterSignupServlet extends HttpServlet {
 					"<div class=\"well text-center\">" +
 						"<h1>CS320 Newsletter</h1>" +
 						"<hr />");
-		if (context.getAttribute("registered") == "success") {
+		if  (context.getAttribute("registered") == "success") {
 			context.setAttribute("registered", null);
 		output.println("<p class=\"lead\">You're all set, <strong>" + request.getAttribute("firstName") + "</strong>!<br />We'll e-mail you at <strong>" + email + "</strong> with regular updates.</p>" +
 						"<h1><span class=\"glyphicon glyphicon-ok text-success\"></span></h1>" +

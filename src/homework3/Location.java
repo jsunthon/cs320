@@ -10,6 +10,15 @@ public class Location {
 	private String[] locationData;
 	private String[] parsedAddress;
 	private String[] stateZipContainer;
+	private double miles;
+	
+	public double getMiles() {
+		return miles;
+	}
+
+	public void setMiles(double miles) {
+		this.miles = miles;
+	}
 
 	public Location(String[] locationData) {
 		this.locationData = locationData;

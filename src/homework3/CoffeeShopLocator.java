@@ -149,21 +149,20 @@ public class CoffeeShopLocator extends HttpServlet {
 
 				// in miles
 				double distance = centralAngle * 3961;
-
+				location.setMiles((double)Math.round(distance * 100d) / 100d);
+				session.setAttribute("miles", distance);
 				if (distance <= 10) {
-					if (location.getName().contains("Starbucks")) {
-						results.add(location);
-					}
+					results.add(location);
 				}
 			}
 		}
 
 		if (type.equals("city") && query != "") {
+			session.setAttribute("miles", null);
 			for (Location location : locations) {
 				if (location.getCity() != null) {
 					String city = location.getCity().toLowerCase();
-					int index = city.indexOf(query.toLowerCase());
-					if ((index == 1 || index == 0) && location.getName().contains("Starbucks")) {
+					if (city.contains(query)) {
 						results.add(location);
 					}
 				}
@@ -171,16 +170,17 @@ public class CoffeeShopLocator extends HttpServlet {
 		}
 
 		if (type.equals("zip")) {
+			session.setAttribute("miles", null);
 			for (Location location : locations) {
 				String zip = location.getZip();
-				if (zip != null && location.getName().contains("Starbucks")) {
+				if (zip != null) {
 					if (zip.equals(query)) {
 						results.add(location);
 					}
 				}
 			}
 		}
-		
+
 		String querySticky = (String) session.getAttribute("query");
 		String typeSticky = (String) session.getAttribute("type");
 
@@ -233,17 +233,32 @@ public class CoffeeShopLocator extends HttpServlet {
 		out.println("	</form>");
 
 		if (results.size() >= 1) {
-			out.println("	<table id=\"results\" class=\"table table-bordered table-striped table-hover\">");
-			out.println("<tr><th>Latitude</th><th>Longitude</th><th>Name</th><th>Address</th></tr>");
-			for (Location location : results) {
-				out.println("	<tr>");
-				out.println("	<td>" + location.getLatitude() + "</td>");
-				out.println("	<td>" + location.getLongitude() + "</td>");
-				out.println("	<td>" + location.getName() + "</td>");
-				out.println("	<td>" + location.getAddress() + "</td>");
-				out.println("	</tr>");
+			if (session.getAttribute("miles") == null) {
+				out.println("	<table id=\"results\" class=\"table table-bordered table-striped table-hover\">");
+				out.println("<tr><th>Latitude</th><th>Longitude</th><th>Name</th><th>Address</th></tr>");
+				for (Location location : results) {
+					out.println("	<tr>");
+					out.println("	<td>" + location.getLatitude() + "</td>");
+					out.println("	<td>" + location.getLongitude() + "</td>");
+					out.println("	<td>" + location.getName() + "</td>");
+					out.println("	<td>" + location.getAddress() + "</td>");
+					out.println("	</tr>");
+				}
+				out.println("	</table>");
+			} else {
+				out.println("	<table id=\"results\" class=\"table table-bordered table-striped table-hover\">");
+				out.println("<tr><th>Distance (mi.)</th><th>Latitude</th><th>Longitude</th><th>Name</th><th>Address</th></tr>");
+				for (Location location : results) {
+					out.println("	<tr>");
+					out.println("	<td>" + location.getMiles() + "</td>");
+					out.println("	<td>" + location.getLatitude() + "</td>");
+					out.println("	<td>" + location.getLongitude() + "</td>");
+					out.println("	<td>" + location.getName() + "</td>");
+					out.println("	<td>" + location.getAddress() + "</td>");
+					out.println("	</tr>");
+				}
+				out.println("	</table>");
 			}
-			out.println("	</table>");
 		}
 		out.println("	</body>");
 		out.println("	</html>");
