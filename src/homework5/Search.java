@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.glass.ui.CommonDialogs.Type;
+
 @WebServlet("/MVC/Search")
 public class Search extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,35 +38,53 @@ public class Search extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/hw5/Search.jsp").forward(request, response);
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		processRequest(request, response);
+	}
+	
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
+				throws ServletException, IOException{
+				
 		String zip = request.getParameter("zip");
 		String city = request.getParameter("city");
 		String type = request.getParameter("type");
-		String latitude = request.getParameter("latitude");
-		String longitude = request.getParameter("longitude");
+		String latitude = request.getParameter("lat");
+		String longitude = request.getParameter("lon");
 		String radius = request.getParameter("radius");
-
-		if (type.equals("zip") && zip != null && !zip.isEmpty()) {
+		
+		if (type != null && type.equals("zip") && zip != null && !zip.isEmpty()) {
 			request.getSession().setAttribute("places", getPlacesByZip(zip));
-			doGet(request, response);
+			request.getSession().setAttribute("latitude", "");
+			request.getSession().setAttribute("longitude", "");
+			request.getSession().setAttribute("radius", "");
+			request.getSession().setAttribute("city", "");
+			request.getSession().setAttribute("zip", zip);	
 		}
 
-		if (type.equals("city") && city != null && !city.isEmpty()) {
+		if (type != null && type.equals("city") && city != null && !city.isEmpty()) {
 			request.getSession().setAttribute("places", getPlacesByCity(city));
-			doGet(request, response);
+			request.getSession().setAttribute("latitude", "");
+			request.getSession().setAttribute("longitude", "");
+			request.getSession().setAttribute("radius", "");
+			request.getSession().setAttribute("zip", "");
+			request.getSession().setAttribute("city", city);		
 		}
 
-		if (type.equals("location") && radius != null && !radius.isEmpty() && longitude != null && !longitude.isEmpty()
+		if (type != null && type.equals("location") && radius != null && !radius.isEmpty() && longitude != null && !longitude.isEmpty()
 				&& latitude != null && !latitude.isEmpty()) {
 			request.getSession().setAttribute("places", getPlacesByLocation(latitude, longitude, radius));
-			doGet(request, response);
+			request.getSession().setAttribute("city", "");
+			request.getSession().setAttribute("zip", "");
+			request.getSession().setAttribute("latitude", latitude);
+			request.getSession().setAttribute("longitude", longitude);
+			request.getSession().setAttribute("radius", radius);		
 		}
-
+		
+		request.getRequestDispatcher("/WEB-INF/hw5/Search.jsp").forward(request, response);
 	}
 
 	protected List<Place> getPlacesByZip(String query) {
@@ -106,10 +126,11 @@ public class Search extends HttpServlet {
 		try {
 			c = DriverManager.getConnection(URL, USER, PASSWORD);
 			String sql = "SELECT name, street_address, city, state, zip, latitude, longitude" + " FROM starbucks"
-					+ " WHERE city LIKE ?";
-
+					+ " WHERE SOUNDEX( ? ) = SOUNDEX( city ) || city LIKE ?";
+			
 			PreparedStatement pstmt = c.prepareStatement(sql);
-			pstmt.setString(1, "%" + query + "%");
+			pstmt.setString(1, query);
+			pstmt.setString(2, "%" + query + "%");
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {

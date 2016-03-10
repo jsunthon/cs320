@@ -19,20 +19,19 @@
 		</div>
 		<br/>
 		<div>
-			Enter the zip here if searching by zip: <input type="text" name="zip"
+			IF SEARCHING BY ZIP: <input type="text" name="zip"
 				value="${zip}" />
 		</div>
 		<br />
 		<div>
-			Enter the city here if searching by city: <input type="text"
+			IF SEARCHING BY CITY: <input type="text"
 				name="city" value="${city}" />
 		</div>
 		<br />
 		<div>
-			Enter the latitude, longitude, and radius respectively if searching
-			by location:<br /> Latitude: <input type="text" name="latitude"
+			IF SEARCHING BY LOCATION:<br /> Latitude: <input type="text" name="lat"
 				value="${latitude}" /> <br /> Longitude: <input type="text"
-				name="longitude" value="${longitude}" /><br /> Within Radius: <input
+				name="lon" value="${longitude}" /><br /> Within Radius: <input
 				type="text" name="radius" value="${radius}" />
 		</div>
 	</form>
