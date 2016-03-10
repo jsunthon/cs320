@@ -27,6 +27,7 @@ public class CoffeeShopLocator extends HttpServlet {
 		ServletContext context = this.getServletContext();
 
 		String csvFile = context.getRealPath("/WEB-INF/starbucks.csv");
+		System.out.println(csvFile);
 		BufferedReader br = null;
 		String line = "";
 

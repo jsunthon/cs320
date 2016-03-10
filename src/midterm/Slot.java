@@ -24,11 +24,10 @@ public class Slot {
 		this.day = day;
 	}
 
-	public Slot(String name, String day, String time) {
+	public Slot(String name, String time) {
 		super();
 		this.name = name;
 		this.time = time;
-		this.day = day;
 	}
 	
 	public String getName() {

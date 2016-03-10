@@ -24,39 +24,7 @@ public class SchedulerServlet extends HttpServlet {
 		String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
 		List<Slot> slots = new ArrayList<Slot>();
 		// populate the slots with times
-		Slot slot1 = new Slot(null, days, "10:00 AM");
-		slots.add(slot1);
-		Slot slot2 = new Slot(null, days, "10:30 AM");
-		slots.add(slot2);
-		Slot slot3 = new Slot(null, days, "11:00 AM");
-		slots.add(slot3);
-		Slot slot4 = new Slot(null, days, "11:30 AM");
-		slots.add(slot4);
-		Slot slot5 = new Slot(null, days, "12:00 PM");
-		slots.add(slot5);
-		Slot slot6 = new Slot(null, days, "12:30 PM");
-		slots.add(slot6);
-		Slot slot7 = new Slot(null, days, "1:00 PM");
-		slots.add(slot7);
-		Slot slot8 = new Slot(null, days, "1:30 PM");
-		slots.add(slot8);
-		Slot slot9 = new Slot(null, days, "2:00 PM");
-		slots.add(slot9);
-		Slot slot10 = new Slot(null, days, "2:30 PM");
-		slots.add(slot10);
-		Slot slot11 = new Slot(null, days, "3:00 PM");
-		slots.add(slot11);
-		Slot slot12 = new Slot(null, days, "3:30 PM");
-		slots.add(slot12);
-		Slot slot13 = new Slot(null, days, "4:00 PM");
-		slots.add(slot13);
-		Slot slot14 = new Slot(null, days, "4:30 PM");
-		slots.add(slot14);
-		Slot slot15 = new Slot(null, days, "5:00 PM");
-		slots.add(slot15);
-		Slot slot16 = new Slot(null, days, "5:30 PM");
-		slots.add(slot16);
-
+		
 		ServletContext context = this.getServletContext();
 		if (context.getAttribute("slots") == null) {
 			context.setAttribute("slots", slots);

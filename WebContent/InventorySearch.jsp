@@ -5,7 +5,7 @@
 <%-- set data source --%>
 <sql:setDataSource driver="com.mysql.jdbc.Driver"
 	url="jdbc:mysql://cs3.calstatela.edu:3306/cs320stu26" user="cs320stu26"
-	password="Ai.dlQHy" />
+	password="theman123" />
 
 <%-- query --%>
 <sql:query var="results">
