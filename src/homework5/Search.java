@@ -39,11 +39,13 @@ public class Search extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
+		System.out.println("Get request");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		processRequest(request, response);
+		System.out.println("Post request");
 	}
 	
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) 
